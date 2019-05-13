@@ -3,10 +3,11 @@ import {
   TOGGLE_INIT,
   FETCH_TODO,
   FETCH_ASYNC,
-  CANCEL_ASYNC
+  CANCEL_ASYNC,
+  DELETE_INIT
 } from '../const';
 
-import { addTodo, toggleTodo, cancelAsync } from '../actions';
+import { addTodo, toggleTodo, cancelAsync, deleteTodoAsync } from '../actions';
 import {
   all,
   put,
@@ -15,7 +16,8 @@ import {
   takeEvery,
   call,
   race,
-  cancelled
+  cancelled,
+  delay
 } from 'redux-saga/effects';
 
 import { eventChannel, END } from 'redux-saga';
@@ -107,11 +109,21 @@ function* watchFetchAsync() {
   }
 }
 
+function* deleteTodo({ id }) {
+  //console.log(action);
+  yield delay(500);
+  yield put(deleteTodoAsync(id));
+}
+
+function* watchDeleteTodo() {
+  yield takeEvery(DELETE_INIT, deleteTodo);
+}
 export default function* rootSaga() {
   yield all([
     watchAddTodo(),
     watchToggleTodo(),
     watchFetchTodo(),
-    watchFetchAsync()
+    watchFetchAsync(),
+    watchDeleteTodo()
   ]);
 }

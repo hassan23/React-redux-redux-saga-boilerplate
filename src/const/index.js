@@ -13,3 +13,7 @@ export const CLEAR_COMPLETE = 'CLEAR_COMPLETE';
 export const FETCH_ASYNC = 'FETCH_ASYNC';
 
 export const CANCEL_ASYNC = 'CANCEL_ASYNC';
+
+export const DELETE_INIT = 'DELETE_INIT';
+
+export const DELETE_TODO = 'DELETE_TODO';

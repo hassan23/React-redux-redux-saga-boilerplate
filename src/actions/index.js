@@ -6,7 +6,9 @@ import {
   FETCH_TODO,
   CLEAR_COMPLETE,
   FETCH_ASYNC,
-  CANCEL_ASYNC
+  CANCEL_ASYNC,
+  DELETE_TODO,
+  DELETE_INIT
 } from '../const';
 
 const addTodo = todo => ({ type: ADD_TODO, todo });
@@ -24,6 +26,11 @@ const clearComplete = () => ({ type: CLEAR_COMPLETE });
 const fetchAsync = () => ({ type: FETCH_ASYNC, value: 5 });
 
 const cancelAsync = () => ({ type: CANCEL_ASYNC });
+
+const deleteTodoInit = id => ({ type: DELETE_INIT, id });
+
+const deleteTodoAsync = id => ({ type: DELETE_TODO, id });
+
 export {
   addTodo,
   addTodoInit,
@@ -32,5 +39,7 @@ export {
   fetchTodo,
   clearComplete,
   fetchAsync,
-  cancelAsync
+  cancelAsync,
+  deleteTodoInit,
+  deleteTodoAsync
 };

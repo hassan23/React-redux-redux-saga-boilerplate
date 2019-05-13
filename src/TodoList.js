@@ -3,22 +3,31 @@ import TodoForm from './TodoForm';
 import { connect } from 'react-redux';
 
 import {
-  addTodo,
   addTodoInit,
   toggleInit,
   fetchTodo,
   clearComplete,
   fetchAsync,
-  cancelAsync
+  cancelAsync,
+  deleteTodoInit
 } from './actions';
 
 class TodoList extends React.Component {
+  deleteTodoHandler = id => e => {
+    console.log(e, id);
+    e.stopPropagation();
+    this.props.deleteTodoInit(id);
+  };
+
+  toggleInitHandler(id) {
+    this.props.toggleInit(id);
+  }
+
   render() {
     const {
       todos,
       countdown,
       addTodoInit,
-      toggleInit,
       fetchTodo,
       clearComplete,
       fetchAsync,
@@ -34,9 +43,10 @@ class TodoList extends React.Component {
               style={{
                 textDecoration: todo.complete ? 'line-through' : ''
               }}
-              onClick={() => toggleInit(todo.id)}
+              onClick={this.toggleInitHandler.bind(this, todo.id)}
             >
               {todo.text}
+              <button onClick={this.deleteTodoHandler(todo.id)}>x</button>
             </li>
           ))}
         </div>
@@ -55,13 +65,13 @@ class TodoList extends React.Component {
 
 const mapStateToProps = ({ todos, countdown }) => ({ todos, countdown });
 const mapDispatchToProps = dispatch => ({
-  addTodo: todo => dispatch(addTodo(todo)),
   addTodoInit: todo => dispatch(addTodoInit(todo)),
   toggleInit: id => dispatch(toggleInit(id)),
   fetchTodo: () => dispatch(fetchTodo()),
   clearComplete: () => dispatch(clearComplete()),
   fetchAsync: () => dispatch(fetchAsync()),
-  cancelAsync: () => dispatch(cancelAsync())
+  cancelAsync: () => dispatch(cancelAsync()),
+  deleteTodoInit: id => dispatch(deleteTodoInit(id))
 });
 
 export default connect(
